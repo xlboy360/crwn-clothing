@@ -32,7 +32,7 @@ export class SignIn extends Component {
       <div className="sign-in">
         <h2>I already have an account</h2>
         <span>Sign in with your email and password</span>
-        <form onSubmit="">
+        <form>
           <FormInput
             name="email"
             type="email"
@@ -50,7 +50,7 @@ export class SignIn extends Component {
             label="Password"
           />
           <div className="buttons">
-            <CustomButton type="submit">Submit</CustomButton>
+            <CustomButton type="submit">Sign In</CustomButton>
             <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
               Sign in with google
             </CustomButton>
