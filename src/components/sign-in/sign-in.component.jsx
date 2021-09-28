@@ -4,7 +4,7 @@ import FormInput from "../form-input/form-input.component";
 
 import "./sign-in.styles.scss";
 
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 
 export class SignIn extends Component {
   constructor(props) {
@@ -16,23 +16,30 @@ export class SignIn extends Component {
     };
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
-    this.state({ email: "", password: "" });
+    const { email, password } = this.state;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      this.setState({ email: "", password: "" });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   handleChange = (event) => {
     const { value, name } = event.target;
     // by destructuring the value we can get the name and the value of the form automatically.
-    this.state({ [name]: value });
+    this.setState({ [name]: value });
   };
   render() {
     return (
       <div className="sign-in">
         <h2>I already have an account</h2>
         <span>Sign in with your email and password</span>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <FormInput
             name="email"
             type="email"
